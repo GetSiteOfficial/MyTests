@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyTests™</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #458cff, #ffcd8f);
+      height: 100vh;
+      overflow: hidden;
+    }
+    .line-container {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100vh;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Добавим небольшую тень */
+      border-radius: 8px; /* Закруглим углы контейнера */
+      overflow: hidden; /* Скрыть линии, которые выходят за пределы контейнера */
+      z-index: -1;
+    }
+
+    .line-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.03) 25%, transparent 25%),
+                  linear-gradient(-45deg, rgba(0, 0, 0, 0.03) 25%, transparent 25%),
+                  linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.03) 75%),
+                  linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.03) 75%);
+      background-size: 40px 40px; /* Ширина и высота одного периода линии */
+    }
+    .navbar {
+      align-items: center;
+      background-color: #abd8ff;
+      border-radius: 25px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+      color: white;
+      display: flex;
+      /* margin: 10px; Remove this line */
+      margin-top: 10px; /* Add margin-top to create spacing */
+      padding: 8px;
+    }
+    .navbar a {
+      font-family: 'Roboto', sans-serif;
+      background-color: white;
+      border-radius: 25px;
+      color: blue;
+      padding: 10px 20px;
+      text-decoration: none;
+      margin-right: 20px;
+      width: 110px;
+      box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease-in-out;
+    }
+    .navbar a:hover {
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .main-content {
+      font-family: 'Roboto', sans-serif;
+      align-items: center;
+      background-image: url('background1.png');
+      background-size: cover;
+      border-radius: 25px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      margin: 10px auto;
+      max-width: 600px;
+      padding: 40px;
+
+      width: 450px;
+      height: 30vh;
+      margin-top: 15vh;
+    }
+    .main-content h1 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 20px;
+      text-align: center;
+      width: 90%;
+      background-color: #7e5eff;
+      border-radius: 25px 25px 0 0;
+      color: white;
+      margin-top: 0;
+      padding: 10px;
+    }
+
+    .main-content p {
+      font-family: 'Roboto', sans-serif;
+      font-size: 20px;
+      text-align: center;
+      width: 90%;;
+      background-color: #b5afa5;
+      border-radius: 5px 5px 5px 5px;
+      color: white;
+      margin-top: 0;
+      padding: 10px;
+      transition: transform .1s; 
+    }
+    .main-content p:hover {
+        transform : scale(1.02);
+    }
+
+    input[type=text] {
+      font-family: 'Roboto', sans-serif;
+      font-size: 20px;
+
+      text-align: center;
+      width: 80%;
+      background-color: #b5afa5;
+      border-radius: 5px 5px 5px 5px;
+      color: white;
+      padding: 8px;
+    }
+    .main-content tb {
+      font-family: 'Roboto', sans-serif;
+      font-size: 20px;
+
+      text-align: center;
+      width: 80%;
+      background-color: #b5afa5;
+      border-radius: 5px 5px 5px 5px;
+      color: white;
+      margin-top: 0;
+      padding: 10px;
+      transition: transform .1s; 
+    }
+
+
+    .main-content button {
+      padding: 8px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 20px;
+      color: white;
+      background-color: #009e22;
+      border-radius: 10px;
+      border: none;
+      color:white
+            padding: 10px 20px;
+
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+      margin-top: 20px;
+
+      height: 50px;
+      width: 250px;
+      transition: transform .1; 
+    }
+    
+    .main-content button:hover {
+        transform : scale(1.02);
+    }
+    
+    @media (max-width: 600px) {
+        .navbar {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 50px);
+            place-items: center; /* Комбинированное выравнивание по центру */
+        }
+        .navbar a {
+            margin-bottom :10px
+        }
+        .main-content {
+            width:75vw;
+        }
+    }
+    
+        /* Стили для контейнера, который будет содержать всплывающее сообщение */
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Стили для всплывающего сообщения */
+        .popup {
+            border-radius: 10px;
+            position: fixed;
+            bottom: 20px; /* Расположение в нижнем правом углу (можете настроить подходящее значение) */
+            right: -300px; /* Начальное положение за правой границей экрана */
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            max-width: 300px;
+            display: flex;
+            align-items: center;
+            transition: right 0.5s, opacity 0.5s; /* Анимация движения и видимости */
+            align-items: flex-end;
+        }
+
+        /* Стили для изображения внутри всплывающего сообщения */
+        .popup img {
+            border-radius: 5px;
+            width: 80px; /* Настройте размер изображения по вашему желанию */
+            height: 80px;
+            margin-right: 10px;
+        }
+
+        /* Стили для текста внутри всплывающего сообщения */
+        .popup p {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Класс для показа всплывающего сообщения */
+        .show {
+            right: 20px; /* Конечное положение (сдвиг влево) для показа сообщения */
+            opacity: 1;
+        }
+
+        /* Класс для скрытия всплывающего сообщения */
+        .hide {
+            right: -300px; /* Положение за правой границей экрана */
+            opacity: 0;
+        }
+
+        .container button{
+          margin-bottom: 0px;
+          font-family: 'Roboto', sans-serif;
+          font-size: 15px;
+          border-radius: 5px;
+          background-color: #abd8ff;
+          border: none;
+          transition: transform .3; 
+        }
+        .container button:hover {
+          transform : scale(1.1);
+        }
+
+        .purple-rectangle {
+          background-color: #f4f5f6;
+          width: 100vw;
+          padding: 15px;
+          box-sizing: border-box;
+          position: absolute; /* Абсолютное позиционирование */
+          bottom: 0px;
+          left: 0px;
+        }
+        .purple-rectangle p {
+          font-family: 'Roboto', sans-serif;
+          font-size: 15px;
+          color: black;
+          margin: 0;
+          padding-left: 20px;
+        }
+        .background-text {
+          font-family: 'Roboto', sans-serif;
+          font-size: 200px;
+          position: absolute;
+          top: 0%;
+          left: 0%;
+          overflow: hidden;
+          width: 100%;
+          height: 100%;
+          line-height: 1;
+          z-index: -1;
+          opacity: 0.03;
+          width: 200vw;
+          word-wrap: break-word;
+          margin-left: -50vw;
+        }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="#">Главная</a>
+    <a href="#">Тесты</a>
+    <a href="#">Помощь</a>
+    <a href="#">MyTests™</a>
+  </div>
+  <div class="main-content">
+    <h1>Тест на нациста - (MyTests™) - Вопрос 6</h1>
+    <p>Устраивает ли вас поведение окружающих вас людей? Если нет, то напишите почему.</p>
+    <input type="text" class="tb" />
+    <button onclick="location.href='q7.html'">Далее</button>
+  </div>
+  <div class="line-container"></div>
+  <div class="container">
+    <div class="popup">
+    <img id="popupImage" src="image1.png" alt="Lady Bug 149 метров от вас, хочет ***">
+    <p id="popupText">Lady Bug 149 метров от вас хочет ***</p>
+    <button onclick="location.href='police.html'">Читать</button>
+  </div>
+  </div>
+  <div class="purple-rectangle">
+    <p>©MyTests™2023</p>
+  </div>
+  <div class="background-text">
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+    MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™ MyTests™
+  </div>
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const messages = [
+                "Lady Bug 149 метров от вас хочет...",
+                "Катя 83 метра от вас хочет...",
+                "Аврора Петровна...",
+                "Плита купить недорого...",
+                "За вами выехала полиция...",
+                "Народные способы увеличения..."
+                // Добавьте здесь другие тексты сообщений по вашему желанию
+            ];
+            const images = [
+                "image1.png",
+                "image2.png",
+                "image3.png",
+                "image4.png",
+                "image5.png",
+                "image6.png",
+                // Добавьте здесь другие тексты сообщений по вашему желанию
+            ];
+
+            function showPopup() {
+                const popup = document.querySelector('.popup');
+                const popupText = document.getElementById('popupText');
+                const popupImage = document.getElementById('popupImage');
+
+                // Выбираем случайный индекс из массива
+                const randomIndex = Math.floor(Math.random() * messages.length);
+                const randomMessage = messages[randomIndex];
+                const randomImage = images[randomIndex];
+
+                // Устанавливаем выбранный текст внутри всплывающего сообщения
+                popupText.textContent = randomMessage;
+                popupImage.src = randomImage;
+
+                // Удаляем выбранное сообщение из массива
+                //messages.splice(randomIndex, 1);
+
+                // Показываем всплывающее сообщение
+                popup.classList.remove('hide');
+                popup.classList.add('show');
+
+                // Задержка перед скрытием
+                setTimeout(hidePopup, 5000); // Время показа сообщения (2000 миллисекунд = 2 секунды)
+            }
+
+            function hidePopup() {
+                const popup = document.querySelector('.popup');
+
+                // Скрываем всплывающее сообщение
+                popup.classList.remove('show');
+                popup.classList.add('hide');
+
+                // Запускаем showPopup() снова после скрытия, чтобы показать следующее сообщение
+                setTimeout(showPopup, 5000); // Задержка перед следующим показом (1000 миллисекунд = 1 секунда)
+            }
+
+            // Запускаем показ первого сообщения
+            showPopup();
+        });
+    </script>
+</body>
+</html>
